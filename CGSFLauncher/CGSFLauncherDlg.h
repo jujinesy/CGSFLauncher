@@ -18,6 +18,10 @@
 #define FILE_HASH _T("File_Hash")
 #define SENDINPUT _T("SendInput")
 #define SENDMESSAGE _T("SendMessage")
+#define WINDOWED _T("Windowed")
+#define CODE_VM _T("Code_VM")
+#define DEBUG_MODE _T("Debug_Mode")
+#define DRBP _T("DRBP")
 
 // CCGSFLauncherDlg 대화 상자
 class CCGSFLauncherDlg : public CDialogEx
@@ -60,6 +64,10 @@ public:
 	CButton m_Check12;
 	CButton m_Check13;
 	CButton m_Check14;
-	void ReadCheckbox();
-	void WriteCheckbox();
+	afx_msg void ReadCheckbox();
+	afx_msg void WriteCheckbox(UINT id = 0);
+	CButton m_Check15;
+	CButton m_Check16;
+	CButton m_Check17;
+	CButton m_Check18;
 };

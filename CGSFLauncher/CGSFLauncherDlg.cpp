@@ -70,6 +70,10 @@ void CCGSFLauncherDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CHECK12, m_Check12);
 	DDX_Control(pDX, IDC_CHECK13, m_Check13);
 	DDX_Control(pDX, IDC_CHECK14, m_Check14);
+	DDX_Control(pDX, IDC_CHECK15, m_Check15);
+	DDX_Control(pDX, IDC_CHECK16, m_Check16);
+	DDX_Control(pDX, IDC_CHECK17, m_Check17);
+	DDX_Control(pDX, IDC_CHECK18, m_Check18);
 }
 
 BEGIN_MESSAGE_MAP(CCGSFLauncherDlg, CDialogEx)
@@ -78,6 +82,7 @@ BEGIN_MESSAGE_MAP(CCGSFLauncherDlg, CDialogEx)
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDOK, &CCGSFLauncherDlg::OnBnClickedOk)
 	ON_BN_CLICKED(IDCANCEL, &CCGSFLauncherDlg::OnBnClickedCancel)
+	ON_COMMAND_RANGE(IDC_CHECK1, IDC_CHECK18, &CCGSFLauncherDlg::WriteCheckbox)
 END_MESSAGE_MAP()
 
 
@@ -174,7 +179,7 @@ void CCGSFLauncherDlg::OnBnClickedOk()
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 	//CDialogEx::OnOK();
 	CCGSFLauncherDlg::WriteCheckbox();
-	ShellExecute(NULL, _T("open"), _T("game.exe"), NULL, NULL, 0);
+	ShellExecute(NULL, _T("open"), _T("FPSClient.exe"), NULL, NULL, 0);
 }
 
 
@@ -259,6 +264,22 @@ void CCGSFLauncherDlg::ReadCheckbox()
 					{
 						m_Check14.SetCheck(_ttoi(data_str.Tokenize(_T("="), WordPos)));
 					}
+					else if (temp == WINDOWED)
+					{
+						m_Check15.SetCheck(_ttoi(data_str.Tokenize(_T("="), WordPos)));
+					}
+					else if (temp == CODE_VM)
+					{
+						m_Check16.SetCheck(_ttoi(data_str.Tokenize(_T("="), WordPos)));
+					}
+					else if (temp == DEBUG_MODE)
+					{
+						m_Check17.SetCheck(_ttoi(data_str.Tokenize(_T("="), WordPos)));
+					}
+					else if (temp == DRBP)
+					{
+						m_Check18.SetCheck(_ttoi(data_str.Tokenize(_T("="), WordPos)));
+					}
 
 				}
 				if (LinePos == 0x1F) // 원하는 데이터의 위치가 0x1F 이므로 해당 위치의 데이터만 가져와서 출력한다.
@@ -279,7 +300,7 @@ void CCGSFLauncherDlg::ReadCheckbox()
 }
 
 
-void CCGSFLauncherDlg::WriteCheckbox()
+void CCGSFLauncherDlg::WriteCheckbox(UINT id)
 {
 	CStdioFile file;
 	file.Open(_T("security_level.ini"), CFile::modeCreate | CFile::modeWrite);
@@ -311,7 +332,17 @@ void CCGSFLauncherDlg::WriteCheckbox()
 
 	temp.Format(_T("[Key_Macro]\n")); save = save + temp;
 	temp.Format(_T("%s=%d\n"), SENDINPUT, m_Check13.GetCheck()); save = save + temp;
-	temp.Format(_T("%s=%d"), SENDMESSAGE, m_Check14.GetCheck()); save = save + temp;
+	temp.Format(_T("%s=%d\n\n"), SENDMESSAGE, m_Check14.GetCheck()); save = save + temp;
+
+	temp.Format(_T("[Windowed]\n")); save = save + temp;
+	temp.Format(_T("%s=%d\n\n"), WINDOWED, m_Check15.GetCheck()); save = save + temp;
+
+	temp.Format(_T("[Anti_Debugging]\n")); save = save + temp;
+	temp.Format(_T("%s=%d\n"), CODE_VM, m_Check16.GetCheck()); save = save + temp;
+	temp.Format(_T("%s=%d\n\n"), DEBUG_MODE, m_Check17.GetCheck()); save = save + temp;
+
+	temp.Format(_T("[Debug_Register]\n")); save = save + temp;
+	temp.Format(_T("%s=%d"), DRBP, m_Check18.GetCheck()); save = save + temp;
 	file.WriteString(save);
 	file.Close();
 }
