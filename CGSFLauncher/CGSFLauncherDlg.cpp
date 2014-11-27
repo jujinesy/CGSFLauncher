@@ -74,6 +74,7 @@ void CCGSFLauncherDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CHECK16, m_Check16);
 	DDX_Control(pDX, IDC_CHECK17, m_Check17);
 	DDX_Control(pDX, IDC_CHECK18, m_Check18);
+	DDX_Control(pDX, IDC_LauncherBG, m_LauncherBG);
 }
 
 BEGIN_MESSAGE_MAP(CCGSFLauncherDlg, CDialogEx)
@@ -129,12 +130,12 @@ BOOL CCGSFLauncherDlg::OnInitDialog()
 	CCGSFLauncherDlg::ReadCheckbox();
 	TrayIconMgr::Instance()->AddTrayIcon(GetSafeHwnd());	
 
-	//HBITMAP hbit = LoadBitmap(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDB_BITMAP1));
-	//m_bg.SetBitmap(hbit);
-	//CRect rt;
-	//GetClientRect(&rt);
-	//m_bg.SetWindowPos(NULL, 0, 0, rt.Width(), rt.Height(), SWP_SHOWWINDOW);
-	//CONTROL         "", IDC_bg, "Static", SS_BITMAP, 291, 31, 13, 12
+	HBITMAP hbit = LoadBitmap(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDB_BITMAP1));
+	m_LauncherBG.SetBitmap(hbit);
+	CRect rt;
+	GetClientRect(&rt);
+	m_LauncherBG.SetWindowPos(NULL, 0, 0, rt.Width(), rt.Height(), SWP_SHOWWINDOW);
+	//CONTROL         "", IDC_LauncherBG, "Static", SS_BITMAP, 281, 22, 20, 20
 
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
@@ -202,7 +203,8 @@ void CCGSFLauncherDlg::OnBnClickedOk()
 void CCGSFLauncherDlg::OnBnClickedCancel()
 {
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-	CDialogEx::OnCancel();
+	//CDialogEx::OnCancel();
+	CCGSFLauncherDlg::OnDialogShow();
 }
 
 
@@ -366,6 +368,10 @@ void CCGSFLauncherDlg::WriteCheckbox(UINT id)
 LRESULT CCGSFLauncherDlg::OnTrayIcon(WPARAM wParam, LPARAM lParam)
 {
 	TrayIconMgr::Instance()->ProcTrayMsg(GetSafeHwnd(), wParam, lParam);
+	if (lParam == WM_LBUTTONDBLCLK)
+	{
+		CCGSFLauncherDlg::OnDialogShow();
+	}
 	return 0; //리턴값이 없으면 에러
 }
 

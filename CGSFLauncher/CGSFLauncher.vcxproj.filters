@@ -80,5 +80,8 @@
     <Image Include="res\MyCGSFLauncher.ico">
       <Filter>리소스 파일</Filter>
     </Image>
+    <Image Include="res\LauncherBG.bmp">
+      <Filter>리소스 파일</Filter>
+    </Image>
   </ItemGroup>
 </Project>

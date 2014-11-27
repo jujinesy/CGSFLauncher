@@ -71,7 +71,12 @@ BOOL CCGSFLauncherApp::InitInstance()
 	SetRegistryKey(_T("로컬 응용 프로그램 마법사에서 생성된 응용 프로그램"));
 
 	
-	//CCGSFLauncherDlg::Instance()->CCGSFLauncherDlg dlg;
+	HANDLE hEvent;
+	hEvent = CreateEvent(NULL, FALSE, TRUE, AfxGetAppName());
+	if (GetLastError() == ERROR_ALREADY_EXISTS) {
+		AfxMessageBox(_T("이미 실행중 입니다.\n트레이 아이콘을 확인해주세요."));
+		exit(0);
+	}
 	CCGSFLauncherDlg dlg;
 	m_pMainWnd = &dlg;
 	INT_PTR nResponse = dlg.DoModal();

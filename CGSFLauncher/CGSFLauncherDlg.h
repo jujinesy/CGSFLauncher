@@ -86,4 +86,5 @@ public:
 	void OnCreatorInfo();
 	void OnCreatorNotice();
 	void OnNONE();
+	CStatic m_LauncherBG;
 };
