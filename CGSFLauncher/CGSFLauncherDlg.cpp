@@ -83,6 +83,14 @@ BEGIN_MESSAGE_MAP(CCGSFLauncherDlg, CDialogEx)
 	ON_BN_CLICKED(IDOK, &CCGSFLauncherDlg::OnBnClickedOk)
 	ON_BN_CLICKED(IDCANCEL, &CCGSFLauncherDlg::OnBnClickedCancel)
 	ON_COMMAND_RANGE(IDC_CHECK1, IDC_CHECK18, &CCGSFLauncherDlg::WriteCheckbox)
+
+	ON_MESSAGE(WM_TRAYICON, &CCGSFLauncherDlg::OnTrayIcon)
+	ON_COMMAND(WM_DIALOG_SHOW, &CCGSFLauncherDlg::OnDialogShow)
+	ON_COMMAND(WM_ABOUTBOX, &CCGSFLauncherDlg::OnCreatorInfo)
+	ON_COMMAND(WM_NOTICE, &CCGSFLauncherDlg::OnCreatorNotice)
+	ON_COMMAND(WM_NONE, OnNONE)
+	ON_COMMAND(WM_APP_EXIT, OnAppExit)
+	ON_WM_DESTROY()
 END_MESSAGE_MAP()
 
 
@@ -119,6 +127,7 @@ BOOL CCGSFLauncherDlg::OnInitDialog()
 
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
 	CCGSFLauncherDlg::ReadCheckbox();
+	TrayIconMgr::Instance()->AddTrayIcon(GetSafeHwnd());	
 
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
@@ -345,4 +354,52 @@ void CCGSFLauncherDlg::WriteCheckbox(UINT id)
 	temp.Format(_T("%s=%d"), DRBP, m_Check18.GetCheck()); save = save + temp;
 	file.WriteString(save);
 	file.Close();
+}
+
+LRESULT CCGSFLauncherDlg::OnTrayIcon(WPARAM wParam, LPARAM lParam)
+{
+	TrayIconMgr::Instance()->ProcTrayMsg(GetSafeHwnd(), wParam, lParam);
+	return 0; //리턴값이 없으면 에러
+}
+
+// 트레이 종료
+void CCGSFLauncherDlg::OnAppExit()
+{
+	OnDestroy();
+}
+
+//다이얼로그 감추기, 보이기
+void CCGSFLauncherDlg::OnDialogShow()
+{
+	if (TrayIconMgr::Instance()->m_bHide)
+	{
+		ShowWindow(false);
+		TrayIconMgr::Instance()->m_bHide = false;
+	}
+	else
+	{
+		ShowWindow(true);
+		TrayIconMgr::Instance()->m_bHide = true;
+	}
+}
+
+void CCGSFLauncherDlg::OnCreatorInfo(void)
+{
+	OnSysCommand(IDM_ABOUTBOX, NULL);
+}
+
+//공지사항
+void CCGSFLauncherDlg::OnCreatorNotice(void)
+{
+}
+
+void CCGSFLauncherDlg::OnNONE(void)
+{
+}
+
+// 다이얼로그 종료시 최종호출 함수
+void CCGSFLauncherDlg::OnDestroy(void)
+{
+	TrayIconMgr::Instance()->DelTrayIcon(GetSafeHwnd());
+	exit(1);
 }

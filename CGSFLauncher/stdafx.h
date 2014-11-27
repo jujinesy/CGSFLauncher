@@ -53,3 +53,9 @@ essorArchitecture='*' publicKeyToken='6595b64144ccf1df' language='*'\"")
 #endif
 
 
+#define WM_DIALOG_SHOW	WM_USER		//다이얼로그 보기, 감추기
+#define WM_APP_EXIT		WM_USER+1	//다이얼로그 종료
+#define WM_TRAYICON		WM_USER+2	//트레이아이콘 메시지
+#define WM_ABOUTBOX		WM_USER+3	//만든이 dlg
+#define WM_NOTICE		WM_USER+4	//공지사항 dlg
+#define WM_NONE			WM_USER+5	//정상이용여부

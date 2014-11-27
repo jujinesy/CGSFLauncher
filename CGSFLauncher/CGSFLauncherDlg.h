@@ -4,6 +4,9 @@
 
 #pragma once
 #include "afxwin.h"
+#include "CppSingleton.h"
+#include "TrayIconMgr.h"
+
 #define GLOBAL_HOOK _T("Global_Hook")
 #define HOOK_RECOVERY _T("Hook_Recovery")
 #define KERNSEC _T("Kernsec")
@@ -23,6 +26,7 @@
 #define DEBUG_MODE _T("Debug_Mode")
 #define DRBP _T("DRBP")
 
+
 // CCGSFLauncherDlg 대화 상자
 class CCGSFLauncherDlg : public CDialogEx
 {
@@ -40,6 +44,7 @@ public:
 // 구현입니다.
 protected:
 	HICON m_hIcon;
+
 
 	// 생성된 메시지 맵 함수
 	virtual BOOL OnInitDialog();
@@ -70,4 +75,15 @@ public:
 	CButton m_Check16;
 	CButton m_Check17;
 	CButton m_Check18;
+
+	afx_msg void OnDestroy();
+	LRESULT OnTrayIcon(WPARAM wParam, LPARAM lParam);
+	// 트레이 종료
+	void OnAppExit();
+	// 다이얼로그 보이기, 감추기
+	void OnDialogShow();
+	// 트래이 아이콘 매니저	
+	void OnCreatorInfo();
+	void OnCreatorNotice();
+	void OnNONE();
 };
