@@ -128,7 +128,8 @@ BOOL CCGSFLauncherDlg::OnInitDialog()
 
 	// TODO: 여기에 추가 초기화 작업을 추가합니다.
 	CCGSFLauncherDlg::ReadCheckbox();
-	TrayIconMgr::Instance()->AddTrayIcon(GetSafeHwnd());	
+	TrayIconMgr::Instance()->AddTrayIcon(GetSafeHwnd());
+	TrayIconMgr::Instance()->TrayIconTooltip(GetSafeHwnd());
 
 	HBITMAP hbit = LoadBitmap(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDB_BITMAP1));
 	m_LauncherBG.SetBitmap(hbit);
@@ -404,6 +405,7 @@ void CCGSFLauncherDlg::OnCreatorInfo(void)
 //공지사항
 void CCGSFLauncherDlg::OnCreatorNotice(void)
 {
+	MessageBoxW(_T("===14.12.14 업데이트 내용===\n-클라이언트 안정화 작업\n-SpeedHack 모듈 탐지강화\n-DR 레지스터 탐지 안정화 등"));
 }
 
 void CCGSFLauncherDlg::OnNONE(void)

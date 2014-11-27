@@ -86,7 +86,7 @@ bool TrayIconMgr::TrayIconTooltip(HWND hWnd)
 	nid.hWnd = hWnd;
 
 	nid.uFlags = NIF_INFO;
-	lstrcpy(nid.szInfo, _T("새로운 공지사항이 도착했습니다.\n공지사항을 확인해 주세요."));
+	lstrcpy(nid.szInfo, _T("현재 Launcher가 최신버전 입니다.!!\n[업데이트 내용]을 확인해 주세요."));
 	lstrcpy(nid.szInfoTitle, _T("알림"));
 	nid.dwInfoFlags = NIIF_INFO;
 	nid.uTimeout = 10000;
