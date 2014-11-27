@@ -129,6 +129,13 @@ BOOL CCGSFLauncherDlg::OnInitDialog()
 	CCGSFLauncherDlg::ReadCheckbox();
 	TrayIconMgr::Instance()->AddTrayIcon(GetSafeHwnd());	
 
+	//HBITMAP hbit = LoadBitmap(AfxGetInstanceHandle(), MAKEINTRESOURCE(IDB_BITMAP1));
+	//m_bg.SetBitmap(hbit);
+	//CRect rt;
+	//GetClientRect(&rt);
+	//m_bg.SetWindowPos(NULL, 0, 0, rt.Width(), rt.Height(), SWP_SHOWWINDOW);
+	//CONTROL         "", IDC_bg, "Static", SS_BITMAP, 291, 31, 13, 12
+
 	return TRUE;  // 포커스를 컨트롤에 설정하지 않으면 TRUE를 반환합니다.
 }
 
