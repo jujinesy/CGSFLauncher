@@ -74,6 +74,8 @@ void CCGSFLauncherDlg::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_CHECK16, m_Check16);
 	DDX_Control(pDX, IDC_CHECK17, m_Check17);
 	DDX_Control(pDX, IDC_CHECK18, m_Check18);
+	DDX_Control(pDX, IDC_CHECK19, m_Check19);
+	DDX_Control(pDX, IDC_CHECK20, m_Check20);
 	DDX_Control(pDX, IDC_LauncherBG, m_LauncherBG);
 }
 
@@ -83,7 +85,7 @@ BEGIN_MESSAGE_MAP(CCGSFLauncherDlg, CDialogEx)
 	ON_WM_QUERYDRAGICON()
 	ON_BN_CLICKED(IDOK, &CCGSFLauncherDlg::OnBnClickedOk)
 	ON_BN_CLICKED(IDCANCEL, &CCGSFLauncherDlg::OnBnClickedCancel)
-	ON_COMMAND_RANGE(IDC_CHECK1, IDC_CHECK18, &CCGSFLauncherDlg::WriteCheckbox)
+	ON_COMMAND_RANGE(IDC_CHECK1, IDC_CHECK20, &CCGSFLauncherDlg::WriteCheckbox)
 
 	ON_MESSAGE(WM_TRAYICON, &CCGSFLauncherDlg::OnTrayIcon)
 	ON_COMMAND(WM_DIALOG_SHOW, &CCGSFLauncherDlg::OnDialogShow)
@@ -299,6 +301,14 @@ void CCGSFLauncherDlg::ReadCheckbox()
 					{
 						m_Check18.SetCheck(_ttoi(data_str.Tokenize(_T("="), WordPos)));
 					}
+					else if (temp == SECURE_LOADING)
+					{
+						m_Check19.SetCheck(_ttoi(data_str.Tokenize(_T("="), WordPos)));
+					}
+					else if (temp == PAGE_PROTECT)
+					{
+						m_Check20.SetCheck(_ttoi(data_str.Tokenize(_T("="), WordPos)));
+					}
 
 				}
 				if (LinePos == 0x1F) // 원하는 데이터의 위치가 0x1F 이므로 해당 위치의 데이터만 가져와서 출력한다.
@@ -361,7 +371,13 @@ void CCGSFLauncherDlg::WriteCheckbox(UINT id)
 	temp.Format(_T("%s=%d\n\n"), DEBUG_MODE, m_Check17.GetCheck()); save = save + temp;
 
 	temp.Format(_T("[Debug_Register]\n")); save = save + temp;
-	temp.Format(_T("%s=%d"), DRBP, m_Check18.GetCheck()); save = save + temp;
+	temp.Format(_T("%s=%d\n\n"), DRBP, m_Check18.GetCheck()); save = save + temp;
+
+	temp.Format(_T("[secureload]\n")); save = save + temp;
+	temp.Format(_T("%s=%d\n\n"), SECURE_LOADING, m_Check19.GetCheck()); save = save + temp;
+
+	temp.Format(_T("[pageprotect]\n")); save = save + temp;
+	temp.Format(_T("%s=%d"), PAGE_PROTECT, m_Check20.GetCheck()); save = save + temp;
 	file.WriteString(save);
 	file.Close();
 }

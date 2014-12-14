@@ -25,6 +25,8 @@
 #define CODE_VM _T("Code_VM")
 #define DEBUG_MODE _T("Debug_Mode")
 #define DRBP _T("DRBP")
+#define SECURE_LOADING _T("secure_loading")
+#define PAGE_PROTECT _T("page_protect")
 
 
 // CCGSFLauncherDlg 대화 상자
@@ -87,4 +89,6 @@ public:
 	void OnCreatorNotice();
 	void OnNONE();
 	CStatic m_LauncherBG;
+	CButton m_Check19;
+	CButton m_Check20;
 };
